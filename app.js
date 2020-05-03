@@ -3,9 +3,11 @@ const app = express()
 const handlebars = require('express-handlebars')
 const port = 3000
 
-app.engine('handlebars', handlebars())
+app.engine('handlebars', handlebars({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
 app.listen(port, () => {
   console.log(`app is running on port ${port}`)
 })
+
+require('./routes')(app)
