@@ -7,6 +7,7 @@ const flash = require('connect-flash')
 const session = require('express-session')
 const passport = require('./config/passport')
 const methodOverride = require('method-override')
+const path = require('path')
 const port = 3000
 
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -20,6 +21,7 @@ app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
 
+app.use('/upload', express.static(path.join(__dirname, '/upload')))
 app.use(methodOverride('_method'))
 
 // 把 req.flash 放到 res.locals 裡面
