@@ -2,6 +2,7 @@
 <form action="/admin/restaurants/{{restaurant.id}}?_method=PUT" method="POST" enctype="multipart/form-data">
   {{else}}
   <form action="/admin/restaurants" method="POST" enctype="multipart/form-data">
+    {{/if}}
     <div class="form-group">
       <label for="name">Name</label>
       <input type="text" class="form-control" name="name" id="name" placeholder="Enter name"
@@ -37,4 +38,3 @@
 
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
-  {{/if}}
