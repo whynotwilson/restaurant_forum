@@ -8,8 +8,9 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.TEXT,
     image: DataTypes.STRING
   }, {});
+  // 取得 restaurant.Category 方法
   Restaurant.associate = function (models) {
-    // associations can be defined here
+    Restaurant.belongsTo(models.Category)
   };
   return Restaurant;
 };
