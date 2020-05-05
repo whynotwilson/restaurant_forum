@@ -1,4 +1,9 @@
 {
+  "scripts": {
+    "start": "node --tls-min-v1.0 app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "development": {
     "username": "root",
     "password": "password",
