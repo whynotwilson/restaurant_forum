@@ -2,7 +2,7 @@
   "name": "restaurant_forum",
   "version": "1.0.0",
   "engines": {
-    "node": "12.16.x"
+    "node": "10.15.x"
   },
   "description": "",
   "main": "app.js",
