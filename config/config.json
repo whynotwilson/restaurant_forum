@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "node --tls-min-v1.0 app.js",
+    "start": "node --tls-max-v1.3 app.js",
     "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
