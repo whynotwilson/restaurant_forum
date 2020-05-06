@@ -1,6 +1,8 @@
 const db = require('../models')
 const Restaurant = db.Restaurant
 const Category = db.Category
+const Comment = db.Comment
+const User = db.User
 const pageLimit = 10
 
 const restController = {
@@ -38,7 +40,7 @@ const restController = {
           raw: true,
           nest: true
         }).then(categories => {
-          console.log(categories)
+          // console.log(categories)
           return res.render('restaurants', {
             restaurants: data,
             categories,
@@ -54,8 +56,13 @@ const restController = {
 
   getRestaurant: (req, res) => {
     return Restaurant.findByPk(req.params.id, {
-      include: Category
+      include: [
+        Category,
+        // eager loading, 預先加載，盡可能把後面需要的資料先拿出來
+        { model: Comment, include: [User] }
+      ]
     }).then(restaurant => {
+      // console.log(restaurant.Comments[0].dataValues)
       return res.render('restaurant', {
         restaurant: restaurant.toJSON()
       })
