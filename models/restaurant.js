@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
   // 取得 restaurant.Category 方法
   Restaurant.associate = function (models) {
     Restaurant.belongsTo(models.Category)
+    Restaurant.hasMany(models.Comment)
   };
   return Restaurant;
 };
