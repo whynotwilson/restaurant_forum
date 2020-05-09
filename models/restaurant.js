@@ -6,7 +6,8 @@ module.exports = (sequelize, DataTypes) => {
     address: DataTypes.STRING,
     opening_hours: DataTypes.STRING,
     description: DataTypes.TEXT,
-    image: DataTypes.STRING
+    image: DataTypes.STRING,
+    viewCounts: DataTypes.INTEGER
   }, {});
   // 取得 restaurant.Category 方法
   Restaurant.associate = function (models) {
