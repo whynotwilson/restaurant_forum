@@ -1,5 +1,5 @@
+{{#if edit}}
 <div class="row">
-  {{#if edit}}
   <form action="/users/{{user.id}}?_method=PUT" method="POST" enctype="multipart/form-data">
     <div class="form-group">
       <label for="name">Name</label>
@@ -9,24 +9,39 @@
       <label for="image">Image</label>
       <input type="file" class="form-control-file" id="image" name="image">
     </div>
-
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
-
-  {{else}}
-  <div class="col-md-4">
-    <img class="img-responsive center-block" src="{{user.image}}" style="width: 250px;margin-bottom: 25px;">
-    <br>
-    <div class="col-md-12">
+</div>
+{{else}}
+<div class="d-flex flex-column col-md-12">
+  <div class="d-inline-flex align-self-start col-md-12 border">
+    <div class="col-md-3">
+      <img class="img-responsive" src="{{user.image}}" style=" width: 250px;margin-bottom: 25px;">
+    </div>
+    <div class="col-md-5">
       <p>{{user.name}}</p>
       <p>{{user.email}}</p>
+      <p>{{Comments.length}} 已評論餐廳</p>
+      <button type="button" class="btn btn-link" style="padding: 0;">
+        <a href="/users/{{user.id}}/edit">Edit</a>
+      </button>
     </div>
-    <button type="button" class="btn btn-link">
-      <a href="/users/{{user.id}}/edit">Edit</a>
-    </button>
   </div>
-  {{/if}}
-  <hr>
+  <br>
+  <div class="d-flex flex-column col-md-12 border">
+    <div class="">
+      <p class="md-3 mt-3 align-middle">{{Comments.length}} 已評論餐廳</p>
+    </div>
+    <ul class="nav nav-list">
+      <li class="divider"></li>
+    </ul>
+    <div>
+      {{#each user.Comments}}
+      <a href="/restaurants/{{this.Restaurant.id}}"><img style=" width: 100px" src="{{this.Restaurant.image}}"
+          alt="Restaurant"></a>
+      {{/each}}
+    </div>
+  </div>
 </div>
 
-<hr>
+{{/if}}
