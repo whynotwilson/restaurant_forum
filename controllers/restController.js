@@ -90,6 +90,17 @@ const restController = {
         })
       })
     })
+  },
+
+  getDashboard: (req, res) => {
+    return Restaurant.findByPk(req.params.id, {
+      include: [
+        Category,
+        { model: Comment, include: [User] }
+      ]
+    }).then(restaurant => {
+      return res.render('dashboard', { restaurant: restaurant.toJSON() })
+    })
   }
 }
 module.exports = restController
