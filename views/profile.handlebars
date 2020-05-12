@@ -21,25 +21,72 @@
     <div class="col-md-5">
       <p>{{user.name}}</p>
       <p>{{user.email}}</p>
-      <p>{{Comments.length}} 已評論餐廳</p>
+      <p><strong>{{restaurants.length}} </strong> 間已評論餐廳</p>
+      <p><strong>{{favoritedRestaurants.length}} </strong>間收藏的餐廳</p>
+      <p><strong>{{followings.length}} </strong>位追蹤者</p>
+      <p><strong>{{followers.length}} </strong>位粉絲</p>
       <button type="button" class="btn btn-link" style="padding: 0;">
         <a href="/users/{{user.id}}/edit">Edit</a>
       </button>
     </div>
   </div>
   <br>
-  <div class="d-flex flex-column col-md-12 border">
-    <div class="">
-      <p class="md-3 mt-3 align-middle">{{Comments.length}} 已評論餐廳</p>
+  <div class="d-inline-flex justify-content-between col-md-12 pl-0 pr-0">
+    <div class="d-flex flex-column col-md-4 border pl-0 pr-0">
+      <div class="">
+        <p class="md-3 mt-3 align-middle pl-3"><strong>{{followers.length}} </strong> 位粉絲</p>
+      </div>
+      <ul class="nav nav-list">
+        <li class="divider"></li>
+      </ul>
+      <div class="pl-3 mb-3">
+        {{#each followers}}
+        <img style=" width: 100px" src="{{this.image}}" alt="Follower">
+        {{/each}}
+      </div>
     </div>
-    <ul class="nav nav-list">
-      <li class="divider"></li>
-    </ul>
-    <div>
-      {{#each user.Comments}}
-      <a href="/restaurants/{{this.Restaurant.id}}"><img style=" width: 100px" src="{{this.Restaurant.image}}"
-          alt="Restaurant"></a>
-      {{/each}}
+    <div class="d-flex flex-column col-md-7 border">
+      <div class="">
+        <p class="md-3 mt-3 align-middle"><strong>{{restaurants.length}} </strong> 已評論餐廳</p>
+      </div>
+      <ul class="nav nav-list">
+        <li class="divider"></li>
+      </ul>
+      <div>
+        {{#each restaurants}}
+        <a href="/restaurants/{{this.id}}"><img style=" width: 100px" src="{{this.image}}" alt="Restaurant"></a>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+
+  <div class="d-inline-flex justify-content-between col-md-12 pl-0 pr-0">
+    <div class="d-flex flex-column col-md-4 border pl-0 pr-0">
+      <div class="">
+        <p class="md-3 mt-3 align-middle pl-3"><strong>{{followings.length}} </strong>位用戶我正在關注他</p>
+      </div>
+      <ul class="nav nav-list">
+        <li class="divider"></li>
+      </ul>
+      <div class="pl-3 mb-3">
+        {{#each followings}}
+        <img style=" width: 100px" src="{{this.image}}" alt="Following">
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="d-flex flex-column col-md-7 border">
+      <div class="">
+        <p class="md-3 mt-3 align-middle"><strong>{{favoritedRestaurants.length}} </strong> 間收藏的餐廳</p>
+      </div>
+      <ul class="nav nav-list">
+        <li class="divider"></li>
+      </ul>
+      <div>
+        {{#each favoritedRestaurants}}
+        <a href="/restaurants/{{this.id}}"><img style=" width: 100px" src="{{this.image}}" alt="Restaurant"></a>
+        {{/each}}
+      </div>
     </div>
   </div>
 </div>

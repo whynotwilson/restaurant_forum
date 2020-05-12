@@ -61,15 +61,39 @@ const userController = {
 
     return User.findByPk(req.params.id, {
       include: [
-        { model: Comment, include: [Restaurant] }
+        { model: Comment, include: [Restaurant] },
+        { model: Restaurant, as: 'FavoritedRestaurants' },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
       ]
     })
       .then(user => {
-        // console.log('user.dataValues', user.dataValues)
-        // console.log('user.Comments[0].dataValues', user.Comments[0].dataValues)
+        // console.log('user.dataValues.Comments', user.dataValues.Comments)
+        // console.log('user.dataValues.Comments[0].dataValues', user.dataValues.Comments[0].dataValues)
+
+        // 刪除重複餐廳
+        let restaurants = user.dataValues.Comments.map(comment => comment.dataValues.Restaurant.dataValues)
+        const uniqueIndex = restaurants.map(restaurant => restaurant.id)
+        restaurants = restaurants.filter((restaurant, index) => {
+          return uniqueIndex.indexOf(restaurant.id) === index
+        })
+
+        const followers = user.dataValues.Followers.map(follower => follower.dataValues)
+        const followings = user.dataValues.Followings.map(following => following.dataValues)
+        const favoritedRestaurants = user.FavoritedRestaurants.map(favoritedRestaurant => favoritedRestaurant.dataValues)
+
+        // console.log('')
+        // console.log('user.dataValues.Followers', user.dataValues.Followers)
+        // console.log('followers', followers)
+        // console.log('')
+
         return res.render('profile', {
           user: user.toJSON(),
+          restaurants,
+          favoritedRestaurants,
           edit,
+          followers,
+          followings,
           Comments: user.dataValues.Comments
         })
       })
