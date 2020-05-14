@@ -10,16 +10,9 @@ const adminService = require('../services/adminServices.js')
 
 const adminController = {
   getRestaurants: (req, res) => {
-    adminService.getRestaurants(req, res, (data) => {
-      return res.render('admin/restaurants', data)
+    adminService.getRestaurants(req, res, (restaurants) => {
+      return res.render('admin/restaurants', { restaurants })
     })
-    // return Restaurant.findAll({
-    //   raw: true,
-    //   nest: true,
-    //   include: [Category]
-    // }).then(restaurants => {
-    //   return res.render('admin/restaurants', { restaurants: restaurants })
-    // })
   },
 
   createRestaurant: (req, res) => {
@@ -142,13 +135,11 @@ const adminController = {
   },
 
   deleteRestaurant: (req, res) => {
-    return Restaurant.findByPk(req.params.id)
-      .then((restaurant) => {
-        restaurant.destroy()
-          .then((restaurant) => {
-            res.redirect('/admin/restaurants')
-          })
-      })
+    adminService.deleteRestaurant(req, res, (data) => {
+      if (data['status'] === 'success') {
+        return res.redirect('/admin/restaurants')
+      }
+    })
   },
   getUsers: (req, res) => {
     return User.findAll({ raw: true })

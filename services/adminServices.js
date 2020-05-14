@@ -17,6 +17,19 @@ const adminService = {
     return Restaurant.findByPk(req.params.id, { include: [Category] }).then(restaurant => {
       callback(restaurant)
     })
+  },
+
+  deleteRestaurant: (req, res, callback) => {
+    return Restaurant.findByPk(req.params.id)
+      .then((restaurant) => {
+        restaurant.destroy()
+          .then((restaurant) => {
+            callback({ status: 'success', message: '' })
+          })
+      }).catch(err => {
+        console.log(err)
+        callback({ status: 'error', message: 'Admin Restaurant delete Error' })
+      })
   }
 
 }
