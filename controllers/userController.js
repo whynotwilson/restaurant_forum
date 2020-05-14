@@ -129,6 +129,11 @@ const userController = {
                 res.redirect(`/users/${req.params.id}`)
               })
           })
+          .catch(err => {
+            console.log(err)
+            req.flash('error_messages', '使用者資料更新失敗')
+            res.redirect(`/users/${req.params.id}`)
+          })
       })
     } else {
       return User.findByPk(req.params.id)
@@ -141,6 +146,11 @@ const userController = {
               req.flash('success_messages', 'user was successfully to update')
               res.redirect(`/users/${user.id}`)
             })
+        })
+        .catch(err => {
+          console.log(err)
+          req.flash('error_messages', '使用者資料更新失敗')
+          res.redirect(`/users/${req.params.id}`)
         })
     }
   },
