@@ -33,6 +33,19 @@ const categoryService = {
             })
         })
     }
+  },
+
+  deleteCategory: (req, res, callback) => {
+    return Category.findByPk(req.params.id)
+      .then((category) => {
+        category.destroy()
+          .then((category) => {
+            callback({ status: 'success', message: 'Category was successfully delete' })
+          })
+      }).catch(err => {
+        console.log(err)
+        callback({ status: 'error', message: 'Category was faily delete' })
+      })
   }
 }
 
