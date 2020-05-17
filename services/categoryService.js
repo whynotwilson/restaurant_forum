@@ -21,6 +21,23 @@ const categoryService = {
     })
   },
 
+  postCategory: (req, res, callback) => {
+    if (!req.body.name) {
+      callback({ status: 'error', message: "name didn't exist" })
+    } else {
+      return Category.create({
+        name: req.body.name
+      })
+        .then((category) => {
+          callback({ status: 'success', message: 'Cetegory was successfully edit' })
+        })
+        .catch(err => {
+          console.log(err)
+          callback({ status: 'error', message: 'Cetegory was faily edit' })
+        })
+    }
+  },
+
   putCategory: (req, res, callback) => {
     if (!req.body.name) {
       callback({ status: 'error', message: "name didn't exist" })
@@ -31,6 +48,10 @@ const categoryService = {
             .then((category) => {
               callback({ status: 'success', message: 'Cetegory was successfully edit' })
             })
+        })
+        .catch(err => {
+          console.log(err)
+          callback({ status: 'error', message: 'Cetegory was faily edit' })
         })
     }
   },
