@@ -1,6 +1,7 @@
 const db = require('../models')
 const Restaurant = db.Restaurant
 const Category = db.Category
+const User = db.User
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
@@ -17,6 +18,11 @@ const adminService = {
 
   getRestaurant: (req, res, callback) => {
     return Restaurant.findByPk(req.params.id, { include: [Category] }).then(restaurant => {
+      console.log('')
+      console.log('')
+      console.log('restaurant', restaurant)
+      console.log('')
+      console.log('')
       callback(restaurant)
     })
   },
@@ -112,6 +118,61 @@ const adminService = {
       }).catch(err => {
         console.log(err)
         callback({ status: 'error', message: 'Admin Restaurant delete Error' })
+      })
+  },
+
+  // createRestaurant: (req, res, callback) => {
+  //   Category.findAll({
+  //     raw: true,
+  //     nest: true
+  //   }).then(categories => {
+  //     callback({ status: 'success', message: 'Admin Restaurant successfully create' })
+  //   }).catch(err => {
+  //     console.log(err)
+  //     callback({ status: 'error', message: 'Admin Restaurant create Error' })
+  //   })
+  // },
+
+  // editRestaurant: (req, res, callback) => {
+  //   Category.findAll({
+  //     raw: true,
+  //     nest: true
+  //   }).then(categories => {
+  //     return Restaurant.findByPk(req.params.id).then(restaurant => {
+  //       // return res.render('admin/create', {
+  //       // categories: categories, restaurant: restaurant.toJSON()
+  //       // })
+  //       callback({ status: 'success', message: 'Admin Restaurant successfully edit' })
+  //     })
+  //   }).catch(err => {
+  //     console.log(err)
+  //     callback({ status: 'error', message: 'Admin Restaurant error edit' })
+  //   })
+  // },
+
+  getUsers: (req, res, callback) => {
+    return User.findAll({ raw: true })
+      .then((users) => {
+        callback({ status: 'success', message: 'Admin successfully getUsers' })
+      })
+      .catch(err => {
+        console.log(err)
+        callback({ status: 'error', message: 'Admin faily getUsers' })
+      })
+  },
+
+  putUsers: (req, res, callback) => {
+    return User.findByPk(req.params.id)
+      .then(async (user) => {
+        user.isAdmin = user.isAdmin ? 0 : 1
+        await user.save()
+      })
+      .then(() => {
+        callback({ status: 'success', message: 'Admin successfully putUsers' })
+      })
+      .catch(err => {
+        console.log(err)
+        callback({ status: 'error', message: 'Admin faily putUsers' })
       })
   }
 

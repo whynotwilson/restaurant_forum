@@ -38,10 +38,8 @@ const adminController = {
   },
 
   getRestaurant: (req, res) => {
-    return Restaurant.findByPk(req.params.id, { include: [Category] }).then(restaurant => {
-      return res.render('admin/restaurant', {
-        restaurant: restaurant.toJSON()
-      })
+    adminService.getRestaurant(req, res, (data) => {
+      return res.render('admin/restaurant', { restaurant: data.dataValues, category: data.Category.dataValues })
     })
   },
 
@@ -76,22 +74,31 @@ const adminController = {
       }
     })
   },
+
   getUsers: (req, res) => {
-    return User.findAll({ raw: true })
-      .then((users) => {
-        res.render('admin/users', { users })
-      })
+    adminService.getUsers(req, res, (users) => {
+      res.render('admin/users', { users })
+    })
+    // return User.findAll({ raw: true })
+    //   .then((users) => {
+    //     res.render('admin/users', { users })
+    //   })
   },
+
   putUsers: (req, res) => {
-    return User.findByPk(req.params.id)
-      .then(async (user) => {
-        user.isAdmin = user.isAdmin ? 0 : 1
-        await user.save()
-      })
-      .then(() => {
-        req.flash('success_messages', '權限已成功更改')
-        return res.redirect('/admin/users')
-      })
+    adminService.putUsers(req, res, (data) => {
+      req.flash('success_messages', '權限已成功更改')
+      return res.redirect('/admin/users')
+    })
+    // return User.findByPk(req.params.id)
+    //   .then(async (user) => {
+    //     user.isAdmin = user.isAdmin ? 0 : 1
+    //     await user.save()
+    //   })
+    //   .then(() => {
+    //     req.flash('success_messages', '權限已成功更改')
+    //     return res.redirect('/admin/users')
+    //   })
   }
 }
 
