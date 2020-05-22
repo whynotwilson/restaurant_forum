@@ -108,47 +108,27 @@ const adminService = {
     }
   },
 
-  deleteRestaurant: (req, res, callback) => {
-    return Restaurant.findByPk(req.params.id)
-      .then((restaurant) => {
-        restaurant.destroy()
-          .then((restaurant) => {
-            callback({ status: 'success', message: '' })
-          })
-      }).catch(err => {
-        console.log(err)
-        callback({ status: 'error', message: 'Admin Restaurant delete Error' })
-      })
+  deleteRestaurant: async (req, res, callback) => {
+    // async await 寫法
+    try {
+      const restaurant = await Restaurant.findByPk(req.params.id)
+      await restaurant.destroy()
+      callback({ status: 'success', message: 'restaurant has been destroy' })
+    } catch {
+      callback({ status: 'error', message: 'Admin Restaurant delete Error' })
+    }
+
+    // return Restaurant.findByPk(req.params.id)
+    //   .then((restaurant) => {
+    //     restaurant.destroy()
+    //       .then((restaurant) => {
+    //         callback({ status: 'success', message: '' })
+    //       })
+    //   }).catch(err => {
+    //     console.log(err)
+    //     callback({ status: 'error', message: 'Admin Restaurant delete Error' })
+    //   })
   },
-
-  // createRestaurant: (req, res, callback) => {
-  //   Category.findAll({
-  //     raw: true,
-  //     nest: true
-  //   }).then(categories => {
-  //     callback({ status: 'success', message: 'Admin Restaurant successfully create' })
-  //   }).catch(err => {
-  //     console.log(err)
-  //     callback({ status: 'error', message: 'Admin Restaurant create Error' })
-  //   })
-  // },
-
-  // editRestaurant: (req, res, callback) => {
-  //   Category.findAll({
-  //     raw: true,
-  //     nest: true
-  //   }).then(categories => {
-  //     return Restaurant.findByPk(req.params.id).then(restaurant => {
-  //       // return res.render('admin/create', {
-  //       // categories: categories, restaurant: restaurant.toJSON()
-  //       // })
-  //       callback({ status: 'success', message: 'Admin Restaurant successfully edit' })
-  //     })
-  //   }).catch(err => {
-  //     console.log(err)
-  //     callback({ status: 'error', message: 'Admin Restaurant error edit' })
-  //   })
-  // },
 
   getUsers: (req, res, callback) => {
     return User.findAll({ raw: true })
